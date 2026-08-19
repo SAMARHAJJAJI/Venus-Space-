@@ -1,46 +1,44 @@
-def show_welcome():
-    print("Welcome to Venus Space")
-    print("Design a space that feels like you")
-
-
-def choose_option(options, message):
-    print()
-    print(message)
-
-    for index, option in enumerate(options, start=1):
-        print(f"{index}. {option}")
-
-    while True:
-        try:
-            choice = int(input("Enter your choice: "))
-
-            if 1 <= choice <= len(options):
-                selected_option = options[choice - 1]
-                break
-            else:
-                print("Invalid choice. Please choose a number from the list.")
-
-        except ValueError:
-            print("Please enter a number.")
-
-    return selected_option
-
-
+from helpers import show_welcome, choose_option, get_positive_number
+from styles import styles, style_details
 show_welcome()
 
-room_name = input("What room are you designing? ")
+room_types = [
+    "Bedroom",
+    "Living Room",
+    "Home Office",
+    "Dining Room"
+]
+room_name = choose_option( room_types, "What room are you designing?"
+)
 
-styles = ["Minimal", "Cozy", "Modern", "Scandinavian"]
 room_style = choose_option(styles, "Choose your interior style:")
+selected_style = style_details[room_style]
+colors = ["Beige", "White", "Sage Green", "Dusty Pink", "Brown", "Cream", "Warm Brown"]
+print()
+print(f"{room_style} Style Details")
+print(f"Mood: {selected_style['mood']}")
+print(f"Lighting: {selected_style['lighting']}")
 
-colors = ["Beige", "White", "Sage Green", "Dusty Pink", "Brown"]
-main_color = choose_option(colors, "Choose your main color:")
+print("Recommended Colors:")
+for color in selected_style["colors"]:
+    print(f"- {color}")
+main_color = main_color = choose_option(
+    selected_style["colors"],
+    "Choose your main color:"
+)
+
 
 materials = ["Wood", "Metal", "Glass", "Stone", "Fabric"]
-favorite_material = choose_option(materials, "Choose your favorite material:")
+print("Recommended Materials:")
+for material in selected_style["materials"]:
+    print(f"- {material}")
+favorite_material = choose_option(
+    selected_style["materials"],
+    "Choose your favorite material:"
+)
 
-room_width = float(input("Enter room width in meters: "))
-room_length = float(input("Enter room length in meters: "))
+room_width = get_positive_numbers("Enter room width in meters: ")
+room_length = get_positive_numbers("Enter room length in meters: ")
 room_area = room_width * room_length
 
 if room_area < 10:
@@ -56,7 +54,7 @@ else:
     room_size = "Spacious"
     recommendation = "You have a lot of space to work with!"
 
-room_budget = float(input("Enter your budget in yen: "))
+room_budget = get_positive_numbers("Enter your budget in yen: ")
 
 print()
 print("Room Summary")
@@ -70,3 +68,6 @@ print(f"Room Size: {room_size}")
 print(f"Budget: ¥{room_budget:.2f}")
 print(f"Recommendation: {recommendation}")
 print("------------------------------")
+# First dictionary experiment
+
+
