@@ -1,5 +1,12 @@
 #MODULE: styles.py
-styles = ["Minimal", "Cozy"]
+#styles = [
+ #   "Minimal",
+  #  "Cozy",
+   # "Modern",
+    #"Scandinavian"
+#]
+
+
 style_details = {
     "Cozy": {
         "mood": "Warm and comfortable",
@@ -13,5 +20,20 @@ style_details = {
         "lighting": "Natural",
         "colors": ["White", "Beige", "Light Gray"],
         "materials": ["Wood", "Glass"]
+    },
+
+    "Modern": {
+        "mood": "Clean and sophisticated",
+        "lighting": "Bright and balanced",
+        "colors": ["White", "Black", "Gray"],
+        "materials": ["Glass", "Metal", "Wood"]
+    },
+
+    "Scandinavian": {
+        "mood": "Light, natural and comfortable",
+        "lighting": "Natural and soft",
+        "colors": ["White", "Beige", "Light Blue"],
+        "materials": ["Light Wood", "Fabric"]
     }
 }
+print(style_details.keys())
