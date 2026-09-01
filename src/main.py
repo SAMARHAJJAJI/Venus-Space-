@@ -1,6 +1,6 @@
 from helpers import show_welcome, choose_option, get_positive_number
 from styles import styles, style_details
-from data import room_types , room_details
+from data import room_types, room_details, design_recommendations 
 
 show_welcome()
 
