@@ -50,26 +50,9 @@ favorite_material = choose_option(
     "Choose your favorite material:"
 )
 
-    # ---------------- DESIGN TIP ----------------
+    # ---------------- DESIGN RECOMMENDATION ----------------
 
-
-if room_name == "Bedroom" and room_style == "Cozy":
-    design_tip = (
-        "Use warm lighting, soft fabrics, and comfortable "
-        "furniture to create a relaxing bedroom."
-    )
-
-elif room_name == "Home Office" and room_style == "Minimal":
-    design_tip = (
-        "Keep the workspace clean and organized with natural "
-        "lighting and simple furniture."
-    )
-
-else:
-    design_tip = (
-        f"Use the {room_style} style while keeping the "
-        f"{room_name} practical and comfortable."
-    )
+design = design_recommendations[(room_name, room_style)]
 
 
     # ---------------- ROOM DIMENSIONS ----------------
@@ -118,8 +101,14 @@ print(f"Area: {room_area:.2f} m²")
 print(f"Room Size: {room_size}")
 print(f"Budget: ¥{room_budget:.2f}")
 print(f"Recommendation: {recommendation}")
-print(f"Design Tip: {design_tip}")
+print(f"Design Tip: {design['tip']}")
+print(f"Lighting: {design['lighting']}")
+print(f"Atmosphere: {design['atmosphere']}")
+print("Furniture Suggestions:")
+for furniture in design["furniture"]:
+ print(f"- {furniture}")
 print("------------------------------")
 # First dictionary experiment
+
 
 

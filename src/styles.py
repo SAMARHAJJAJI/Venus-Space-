@@ -1,10 +1,10 @@
 #MODULE: styles.py
-#styles = [
- #   "Minimal",
-  #  "Cozy",
-   # "Modern",
-    #"Scandinavian"
-#]
+styles = [
+   "Minimal",
+   "Cozy",
+   "Modern",
+    "Scandinavian"
+]
 
 
 style_details = {

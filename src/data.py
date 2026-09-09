@@ -84,5 +84,60 @@ design_recommendations = {
         "furniture": ["Dining Table", "Dining Chairs", "Sideboard"],
         "lighting": "Natural and bright",
         "atmosphere": "Clean and elegant"
-    }
+    },
+    ("Bedroom", "Modern"): {
+        "tip": "Combine a clean bed frame with bold accents and practical storage for a polished bedroom.",
+        "furniture": ["Platform Bed", "Bedside Table", "Built-in Wardrobe"],
+        "lighting": "Layered and adjustable",
+        "atmosphere": "Stylish and confident"
+    },
+
+    ("Bedroom", "Scandinavian"): {
+        "tip": "Use light wood, soft textiles, and pale colors to create a peaceful and airy bedroom.",
+        "furniture": ["Light Wood Bed", "Bedside Table", "Open Clothing Rack"],
+        "lighting": "Bright natural light with warm lamps",
+        "atmosphere": "Peaceful and airy"
+    },
+
+    ("Living Room", "Modern"): {
+        "tip": "Use strong shapes, a statement sofa, and selected accents for a contemporary living room.",
+        "furniture": ["Sectional Sofa", "Glass Coffee Table", "Media Console"],
+        "lighting": "Layered accent lighting",
+        "atmosphere": "Elegant and energetic"
+    },
+
+    ("Living Room", "Scandinavian"): {
+        "tip": "Mix light timber, comfortable seating, and simple decoration for a bright social space.",
+        "furniture": ["Fabric Sofa", "Wooden Coffee Table", "Open Shelving"],
+        "lighting": "Bright and warm",
+        "atmosphere": "Light and inviting"
+    },
+
+    ("Home Office", "Modern"): {
+        "tip": "Use a streamlined desk, ergonomic chair, and focused task lighting for productive work.",
+        "furniture": ["Standing Desk", "Ergonomic Chair", "Drawer Unit"],
+        "lighting": "Bright task lighting",
+        "atmosphere": "Focused and professional"
+    },
+
+    ("Home Office", "Scandinavian"): {
+        "tip": "Use light wood, plants, and soft textures to create a calm but productive workspace.",
+        "furniture": ["Wooden Desk", "Comfortable Chair", "Storage Shelves"],
+        "lighting": "Natural and gentle",
+        "atmosphere": "Calm and productive"
+    },
+
+    ("Dining Room", "Modern"): {
+        "tip": "Make the dining table the focal point and use statement lighting for a refined space.",
+        "furniture": ["Extendable Dining Table", "Upholstered Chairs", "Modern Sideboard"],
+        "lighting": "Statement pendant lighting",
+        "atmosphere": "Refined and social"
+    },
+
+    ("Dining Room", "Scandinavian"): {
+        "tip": "Use natural wood, simple chairs, and soft colors for relaxed and welcoming meals.",
+        "furniture": ["Light Wood Dining Table", "Wooden Chairs", "Low Sideboard"],
+        "lighting": "Warm pendant lighting",
+        "atmosphere": "Natural and welcoming"
+    },
 }
