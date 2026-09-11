@@ -36,4 +36,3 @@ style_details = {
         "materials": ["Light Wood", "Fabric"]
     }
 }
-print(style_details.keys())

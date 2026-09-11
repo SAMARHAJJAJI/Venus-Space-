@@ -141,3 +141,28 @@ design_recommendations = {
         "atmosphere": "Natural and welcoming"
     },
 }
+
+room_size_recommendations = {
+    "Compact": {
+        "layout": "Keep the walking paths open and place large furniture against the walls.",
+        "furniture": "Choose multifunctional and compact furniture.",
+        "color": "Use light colors to make the room feel more spacious."
+    },
+
+    "Medium": {
+        "layout": "Create clear areas for each activity while keeping the room balanced.",
+        "furniture": "Choose medium-sized furniture with enough space between each item.",
+        "color": "Use neutral colors with one accent color."
+    },
+
+    "Spacious": {
+        "layout": "Divide the room into separate zones using furniture, rugs, or lighting.",
+        "furniture": "Use larger statement pieces to fill the room comfortably.",
+        "color": "Use deeper colors or contrasting accents."
+    }
+}
+budget_scopes = [
+    "Suggested furniture only",
+    "Furniture and decoration",
+    "Complete room design"
+]
