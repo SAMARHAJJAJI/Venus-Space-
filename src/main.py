@@ -1,6 +1,7 @@
 from helpers import show_welcome, choose_option, get_positive_number
 from styles import styles, style_details
 from data import room_types, room_details, design_recommendations , room_size_recommendations , budget_scopes
+from furniture import furniture_prices
 
 
 show_welcome()
@@ -54,6 +55,10 @@ favorite_material = choose_option(
     # ---------------- DESIGN RECOMMENDATION ----------------
 
 design = design_recommendations[(room_name, room_style)]
+furniture_total = 0
+
+for furniture in design["furniture"]:
+    furniture_total += furniture_prices[furniture]
 
 
     # ---------------- ROOM DIMENSIONS ----------------
@@ -88,6 +93,10 @@ budget_scope = choose_option(
     budget_scopes,
     "How should we use your budget?"
 )
+if furniture_total <= room_budget:
+    budget_status = "Within budget"
+else:
+    budget_status = "Over budget"
 
      # ---------------- FINAL SUMMARY ----------------
 
@@ -113,6 +122,8 @@ print("Furniture Suggestions:")
 for furniture in design["furniture"]:
  print(f"- {furniture}")
 print(f"Budget Scope: {budget_scope}")
+print(f"Estimated Furniture Cost: ¥{furniture_total:.2f}")
+print(f"Budget Status: {budget_status}")
 print("------------------------------")
 # First dictionary experiment
 
