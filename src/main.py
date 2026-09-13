@@ -1,8 +1,8 @@
 from helpers import show_welcome, choose_option, get_positive_number
 from styles import styles, style_details
-from data import room_types, room_details, design_recommendations , room_size_recommendations , budget_scopes
+from data import room_types, room_details, design_recommendations , room_size_recommendations , budget_scope
 from furniture import furniture_prices
-
+from decorations import decoration_prices
 
 show_welcome()
 
@@ -55,10 +55,6 @@ favorite_material = choose_option(
     # ---------------- DESIGN RECOMMENDATION ----------------
 
 design = design_recommendations[(room_name, room_style)]
-furniture_total = 0
-
-for furniture in design["furniture"]:
-    furniture_total += furniture_prices[furniture]
 
 
     # ---------------- ROOM DIMENSIONS ----------------
@@ -84,22 +80,44 @@ else:
 size_advice = room_size_recommendations[room_size]
 
 
-     # ---------------- BUDGET ----------------
-
+   # ---------------- BUDGET ----------------
 
 room_budget = get_positive_number("Enter your budget in yuan: ")
 
 budget_scope = choose_option(
-    budget_scopes,
+    budget_scope,
     "How should we use your budget?"
 )
-if furniture_total <= room_budget:
+
+
+# Calculate furniture cost
+furniture_total = 0
+
+for furniture in design["furniture"]:
+    furniture_total += furniture_prices[furniture]
+
+
+# Calculate decoration cost
+decoration_total = 0
+
+if budget_scope == "Furniture and decoration":
+    for decoration in decoration_prices:
+        decoration_total += decoration_prices[decoration]
+
+
+# Calculate the final estimated cost
+total_estimated_cost = furniture_total + decoration_total
+
+
+# Compare the total cost with the budget
+if total_estimated_cost <= room_budget:
     budget_status = "Within budget"
 else:
     budget_status = "Over budget"
 
-     # ---------------- FINAL SUMMARY ----------------
+   
 
+    # ---------------- FINAL SUMMARY ----------------
 
 print()
 print("Room Summary")
@@ -111,18 +129,27 @@ print(f"Favorite Material: {favorite_material}")
 print(f"Area: {room_area:.2f} m²")
 print(f"Room Size: {room_size}")
 print(f"Budget: ¥{room_budget:.2f}")
+
 print("Room Size Advice:")
 print(f"Layout: {size_advice['layout']}")
 print(f"Furniture: {size_advice['furniture']}")
 print(f"Color: {size_advice['color']}")
-print(f"Design Tip: {design['tip']}") 
+
+print(f"Design Tip: {design['tip']}")
 print(f"Lighting: {design['lighting']}")
 print(f"Atmosphere: {design['atmosphere']}")
+
 print("Furniture Suggestions:")
 for furniture in design["furniture"]:
- print(f"- {furniture}")
+    print(f"- {furniture}")
+
 print(f"Budget Scope: {budget_scope}")
 print(f"Estimated Furniture Cost: ¥{furniture_total:.2f}")
+
+if budget_scope == "Furniture and decoration":
+    print(f"Estimated Decoration Cost: ¥{decoration_total:.2f}")
+
+print(f"Total Estimated Cost: ¥{total_estimated_cost:.2f}")
 print(f"Budget Status: {budget_status}")
 print("------------------------------")
 # First dictionary experiment

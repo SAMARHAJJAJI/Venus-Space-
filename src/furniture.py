@@ -5,7 +5,8 @@ furniture_prices = {
     "Platform Bed": 5000,
     "Bedside Table": 800,
     "Built-in Wardrobe": 6000,
-
+    "Simple Wardrobe": 3500,
+    
     "Sofa": 4500,
     "Coffee Table": 1200,
     "TV Cabinet": 1800,
