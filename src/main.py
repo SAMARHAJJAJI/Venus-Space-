@@ -3,7 +3,7 @@ from styles import styles, style_details
 from data import room_types, room_details, design_recommendations , room_size_recommendations , budget_scope
 from furniture import furniture_prices
 from decorations import decoration_prices
-
+from Design_costs import lighting_prices, material_prices_per_m2
 show_welcome()
 
      # ---------------- ROOM ----------------
@@ -100,14 +100,29 @@ for furniture in design["furniture"]:
 # Calculate decoration cost
 decoration_total = 0
 
-if budget_scope == "Furniture and decoration":
+if budget_scope in [
+    "Furniture and decoration",
+    "Complete room design"
+]:
     for decoration in decoration_prices:
         decoration_total += decoration_prices[decoration]
+lighting_total = 0
+material_total = 0
 
+if budget_scope == "Complete room design":
+    lighting_name = selected_style["lighting"]
+    lighting_total = lighting_prices[lighting_name]
+
+    material_price = material_prices_per_m2[favorite_material]
+    material_total = room_area * material_price
 
 # Calculate the final estimated cost
-total_estimated_cost = furniture_total + decoration_total
-
+total_estimated_cost = (
+    furniture_total
+    + decoration_total
+    + lighting_total
+    + material_total
+)
 
 # Compare the total cost with the budget
 if total_estimated_cost <= room_budget:
