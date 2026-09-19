@@ -161,7 +161,7 @@ room_size_recommendations = {
         "color": "Use deeper colors or contrasting accents."
     }
 }
-budget_scope = [
+budget_scopes = [
     "Suggested furniture only",
     "Furniture and decoration",
     "Complete room design"

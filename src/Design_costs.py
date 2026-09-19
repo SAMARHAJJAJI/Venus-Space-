@@ -1,4 +1,4 @@
- lighting_prices = {
+lighting_prices = {
     "Warm": 1200,
     "Natural": 1000,
     "Bright and balanced": 1600,
