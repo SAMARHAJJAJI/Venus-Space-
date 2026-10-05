@@ -166,3 +166,8 @@ budget_scopes = [
     "Furniture and decoration",
     "Complete room design"
 ]
+budget_actions = [
+    "Keep the current design",
+    "Find lower-cost alternatives",
+    "Discuss a possible discount"
+]

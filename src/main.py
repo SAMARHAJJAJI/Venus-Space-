@@ -5,7 +5,8 @@ from data import (
     room_details,
     design_recommendations,
     room_size_recommendations,
-    budget_scopes
+    budget_scopes,
+    budget_actions
 )
 from furniture import furniture_prices
 from decorations import decoration_prices
@@ -177,52 +178,74 @@ else:
 
 # ---------------- FINAL SUMMARY ----------------
 
+# #print()
+# #print("Room Summary")
+# #print("------------------------------")
+
+# # your other summary print statements go here
+
+# #print(f"Total Estimated Cost: ¥{total_estimated_cost:.2f}")
+# print(f"Budget Status: {budget_status}")
+
+
+# # Add the new code here
+
+# if budget_status == "Over budget":
+#     print()
+
+#     client_action = choose_option(
+#         budget_actions,
+#         "How would you like to continue?"
+#     )
+
+#     print()
+#     print(f"You selected: {client_action}")
+
+#     if client_action == "Keep the current design":
+#         print(
+#             "Excellent choice. We will keep the selected design "
+#             "and preserve the quality of the recommended items."
+#         )
+
+#     elif client_action == "Find lower-cost alternatives":
+#         print(
+#             "We can look for more affordable furniture and materials "
+#             "while keeping the same overall atmosphere."
+#         )
+
+#     elif client_action == "Discuss a possible discount":
+#         print(
+#             "We can review the design together and discuss whether "
+#             "a discount or special package is available."
+#         )
+
+# else:
+#     print()
+#     print(
+#         "Your design fits within the budget. "
+#         "We can now focus on refining the final details."
+#     )
+
+# print("------------------------------")
+print(f"Room: {room_name}")
+print(f"Style: {room_style}")
+print(f"Main Color: {main_color}")
+print(f"Favorite Material: {favorite_material}")
+print(f"Room Area: {room_area:.1f} m²")
+print(f"Room Size: {room_size}")
 print()
-print("Room Summary")
-print("------------------------------")
+print("Size Advice:")
+print(f"- Layout: {size_advice['layout']}")
+print(f"- Furniture: {size_advice['furniture']}")
+print(f"- Color: {size_advice['color']}")
+print()
+print("Cost Breakdown:")
+print(f"- Furniture: ¥{furniture_total:.2f}")
+print(f"- Decoration: ¥{decoration_total:.2f}")
+print(f"- Lighting: ¥{lighting_total:.2f}")
+print(f"- Materials: ¥{material_total:.2f}")
+print(f"- Total Estimated Cost: ¥{total_estimated_cost:.2f}")
+print(f"- Your Budget: ¥{room_budget:.2f}")
 
-# your other summary print statements go here
-
-print(f"Total Estimated Cost: ¥{total_estimated_cost:.2f}")
-print(f"Budget Status: {budget_status}")
-
-
-# Add the new code here
-
-if budget_status == "Over budget":
-    print()
-
-    client_action = choose_option(
-        budget_actions,
-        "How would you like to continue?"
-    )
-
-    print()
-    print(f"You selected: {client_action}")
-
-    if client_action == "Keep the current design":
-        print(
-            "Excellent choice. We will keep the selected design "
-            "and preserve the quality of the recommended items."
-        )
-
-    elif client_action == "Find lower-cost alternatives":
-        print(
-            "We can look for more affordable furniture and materials "
-            "while keeping the same overall atmosphere."
-        )
-
-    elif client_action == "Discuss a possible discount":
-        print(
-            "We can review the design together and discuss whether "
-            "a discount or special package is available."
-        )
-
-else:
-    print()
-    print(
-        "Your design fits within the budget. "
-        "We can now focus on refining the final details."
-    )
-
-print("------------------------------")
+budget_difference = abs(room_budget - total_estimated_cost)
+print(f"Budget Status: {budget_status} (difference: ¥{budget_difference:.2f})")
