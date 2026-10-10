@@ -10,7 +10,7 @@ from data import (
 )
 from furniture import furniture_prices
 from decorations import decoration_prices
-from Design_costs import lighting_prices, material_prices_per_m2
+from design_costs import lighting_prices, material_prices_per_m2
 
 def calculate_room_size(room_area):
     if room_area < 10:
@@ -19,6 +19,7 @@ def calculate_room_size(room_area):
         return "Medium"
     else:
         return "Spacious"
+
 
 # ---------------- WELCOME ----------------
 
@@ -129,7 +130,7 @@ budget_scope = choose_option(
 furniture_total = 0
 
 for furniture in design["furniture"]:
-    furniture_total += furniture_prices[furniture]
+    furniture_total += furniture_prices[room_name][furniture]
 
 
 # ---------------- DECORATION COST ----------------
@@ -178,55 +179,10 @@ else:
 
 # ---------------- FINAL SUMMARY ----------------
 
-# #print()
-# #print("Room Summary")
-# #print("------------------------------")
+print()
+print("Room Summary")
+print("------------------------------")
 
-# # your other summary print statements go here
-
-# #print(f"Total Estimated Cost: ¥{total_estimated_cost:.2f}")
-# print(f"Budget Status: {budget_status}")
-
-
-# # Add the new code here
-
-# if budget_status == "Over budget":
-#     print()
-
-#     client_action = choose_option(
-#         budget_actions,
-#         "How would you like to continue?"
-#     )
-
-#     print()
-#     print(f"You selected: {client_action}")
-
-#     if client_action == "Keep the current design":
-#         print(
-#             "Excellent choice. We will keep the selected design "
-#             "and preserve the quality of the recommended items."
-#         )
-
-#     elif client_action == "Find lower-cost alternatives":
-#         print(
-#             "We can look for more affordable furniture and materials "
-#             "while keeping the same overall atmosphere."
-#         )
-
-#     elif client_action == "Discuss a possible discount":
-#         print(
-#             "We can review the design together and discuss whether "
-#             "a discount or special package is available."
-#         )
-
-# else:
-#     print()
-#     print(
-#         "Your design fits within the budget. "
-#         "We can now focus on refining the final details."
-#     )
-
-# print("------------------------------")
 print(f"Room: {room_name}")
 print(f"Style: {room_style}")
 print(f"Main Color: {main_color}")
@@ -249,3 +205,62 @@ print(f"- Your Budget: ¥{room_budget:.2f}")
 
 budget_difference = abs(room_budget - total_estimated_cost)
 print(f"Budget Status: {budget_status} (difference: ¥{budget_difference:.2f})")
+
+
+# ---------------- OVER BUDGET / WITHIN BUDGET ----------------
+
+if budget_status == "Over budget":
+    print()
+
+    client_action = choose_option(
+        budget_actions,
+        "How would you like to continue?"
+    )
+
+    print()
+    print(f"You selected: {client_action}")
+
+    if client_action == "Keep the current design":
+        print(
+            "Excellent choice. We will keep the selected design "
+            "and preserve the quality of the recommended items."
+        )
+
+    elif client_action == "Find lower-cost alternatives":
+        print()
+        print("Budget-Friendly Suggestions:")
+
+        cheapest_name = min(
+            furniture_prices[room_name],
+            key=furniture_prices[room_name].get
+        )
+        cheapest_price = furniture_prices[room_name][cheapest_name]
+
+        new_furniture_total = 0
+
+        for furniture in design["furniture"]:
+            old_price = furniture_prices[room_name][furniture]
+            new_furniture_total += cheapest_price
+            print(
+                f"- Swap '{furniture}' (¥{old_price}) "
+                f"for '{cheapest_name}' (¥{cheapest_price})"
+            )
+
+        savings = furniture_total - new_furniture_total
+        print(f"New furniture total: ¥{new_furniture_total:.2f}")
+        print(f"You save: ¥{savings:.2f}")
+
+    elif client_action == "Discuss a possible discount":
+        print(
+            "We can review the design together and discuss whether "
+            "a discount or special package is available."
+        )
+
+else:
+    print()
+    print(
+        "Your design fits within the budget. "
+        "We can now focus on refining the final details."
+    )
+
+print("------------------------------")
