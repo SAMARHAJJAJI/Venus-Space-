@@ -11,6 +11,8 @@ from data import (
 from furniture import furniture_prices
 from decorations import decoration_prices
 from design_costs import lighting_prices, material_prices_per_m2
+from reports import save_design_summary
+
 
 def calculate_room_size(room_area):
     if room_area < 10:
@@ -251,10 +253,30 @@ if budget_status == "Over budget":
         print(f"You save: ¥{savings:.2f}")
 
     elif client_action == "Discuss a possible discount":
-        print(
-            "We can review the design together and discuss whether "
-            "a discount or special package is available."
+        print()
+
+        discount_percent = get_positive_number(
+            "Enter discount percentage (1-100): "
         )
+
+        while discount_percent > 100:
+            print("Discount cannot be more than 100%.")
+            discount_percent = get_positive_number(
+                "Enter discount percentage (1-100): "
+            )
+
+        discount_amount = total_estimated_cost * discount_percent / 100
+        discounted_total = total_estimated_cost - discount_amount
+
+        print()
+        print(f"Discount: {discount_percent:.0f}% = ¥{discount_amount:.2f}")
+        print(f"New total: ¥{discounted_total:.2f}")
+
+        if discounted_total <= room_budget:
+            print("With this discount, the design now fits your budget.")
+        else:
+            print("Even with this discount, the design is still over budget.")
+            print("You may want to choose lower-cost alternatives as well.")
 
 else:
     print()
@@ -264,3 +286,25 @@ else:
     )
 
 print("------------------------------")
+
+
+# ---------------- SAVE SUMMARY TO FILE ----------------
+
+save_design_summary(
+    "design_summary.txt",
+    room_name,
+    room_style,
+    main_color,
+    favorite_material,
+    room_area,
+    room_size,
+    furniture_total,
+    decoration_total,
+    lighting_total,
+    material_total,
+    total_estimated_cost,
+    room_budget,
+    budget_status
+)
+
+print("Summary saved to design_summary.txt")
