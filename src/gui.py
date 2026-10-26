@@ -1,4 +1,7 @@
+
+import os
 import tkinter as tk
+import customtkinter as ctk
 from data import (
     room_types,
     room_details,
@@ -11,51 +14,59 @@ from decorations import decoration_prices
 from design_costs import lighting_prices, material_prices_per_m2
 
 
-def update_style_choices(*args):
-    selected_style = style_var.get()
-    details = style_details[selected_style]
+# ---------------- THEME ----------------
 
-    color_var.set(details["colors"][0])
-    material_var.set(details["materials"][0])
+BG      = "#F5F0E8"
+CARD    = "#FFFFFF"
+ACCENT  = "#A07850"
+HOVER   = "#8B6543"
+TEXT    = "#4A3F35"
+MUTED   = "#9C8E7E"
+LINE    = "#E3D9C8"
+ENTRY   = "#FBF8F3"
+ERROR   = "#B0524A"
 
-    color_menu["menu"].delete(0, "end")
-    for color in details["colors"]:
-        color_menu["menu"].add_command(
-            label=color, command=tk._setit(color_var, color)
-        )
 
-    material_menu["menu"].delete(0, "end")
-    for material in details["materials"]:
-        material_menu["menu"].add_command(
-            label=material, command=tk._setit(material_var, material)
-        )
+# ---------------- LOGIC ----------------
 
-    style_info_label.config(
-        text=f"Mood: {details['mood']}   |   Lighting: {details['lighting']}"
+def update_style_choices(choice=None):
+    details = style_details[style_menu.get()]
+
+    color_menu.configure(values=details["colors"])
+    color_menu.set(details["colors"][0])
+
+    material_menu.configure(values=details["materials"])
+    material_menu.set(details["materials"][0])
+
+    style_info.configure(
+        text=f"{details['mood']}  ·  {details['lighting']}"
     )
 
 
 def estimate_cost():
-    room = room_var.get()
-    style = style_var.get()
-    scope = scope_var.get()
+    room = room_menu.get()
+    style = style_menu.get()
+    scope = scope_menu.get()
 
     try:
         width = float(width_entry.get())
         length = float(length_entry.get())
         budget = float(budget_entry.get())
     except ValueError:
-        result_label.config(
-            text="Please enter valid numbers for width, length and budget."
+        result_label.configure(
+            text="Please enter valid numbers for width, length and budget.",
+            text_color=ERROR
         )
         return
 
     if width <= 0 or length <= 0 or budget <= 0:
-        result_label.config(text="Numbers must be greater than 0.")
+        result_label.configure(
+            text="Numbers must be greater than 0.",
+            text_color=ERROR
+        )
         return
 
     area = width * length
-
     design = design_recommendations[(room, style)]
 
     furniture_total = 0
@@ -71,7 +82,7 @@ def estimate_cost():
     material_total = 0
     if scope == "Complete room design":
         lighting_total = lighting_prices[style_details[style]["lighting"]]
-        material_total = area * material_prices_per_m2[material_var.get()]
+        material_total = area * material_prices_per_m2[material_menu.get()]
 
     total = (
         furniture_total
@@ -85,7 +96,7 @@ def estimate_cost():
     else:
         status = f"Over budget (difference: ¥{total - budget:.2f})"
 
-    result_label.config(
+    result_label.configure(
         text=(
             f"Room Area: {area:.1f} m²\n"
             f"Furniture: ¥{furniture_total:.2f}\n"
@@ -95,66 +106,140 @@ def estimate_cost():
             f"Total: ¥{total:.2f}\n"
             f"Budget: ¥{budget:.2f}\n"
             f"Status: {status}"
-        )
+        ),
+        text_color=TEXT
     )
 
 
-# ---------------- BUILD THE WINDOW ----------------
+# ---------------- WINDOW ----------------
 
-window = tk.Tk()
-window.title("Venus Space")
-window.geometry("420x600")
+ctk.set_appearance_mode("light")
 
-tk.Label(window, text="Venus Space", font=("Arial", 18)).pack(pady=10)
+app = ctk.CTk()
+app.geometry("440x760")
+app.title("Venus Space")
 
-tk.Label(window, text="Room:").pack()
-room_var = tk.StringVar(window)
-room_var.set(room_types[0])
-tk.OptionMenu(window, room_var, *room_types).pack()
+ASSETS = os.path.join(os.path.dirname(__file__), "..", "assets")
+app.iconbitmap(os.path.join(ASSETS, "logo.ico"))
 
-tk.Label(window, text="Style:").pack()
-style_var = tk.StringVar(window)
-style_var.set(styles[0])
-style_menu = tk.OptionMenu(
-    window, style_var, *styles, command=update_style_choices
+logo_image = tk.PhotoImage(file=os.path.join(ASSETS, "logo.png"))
+
+main = ctk.CTkFrame(app, fg_color=BG, corner_radius=0)
+main.pack(fill="both", expand=True)
+
+logo_label = tk.Label(main, image=logo_image, bg=BG)
+logo_label.pack(pady=(16, 0))
+
+ctk.CTkLabel(
+    main, text="Venus Space",
+    font=("Georgia", 26, "bold"), text_color=TEXT
+).pack(pady=(6, 0))
+
+ctk.CTkLabel(
+    main, text="Design a space that feels like you",
+    font=("Georgia", 13, "italic"), text_color=MUTED
+).pack()
+
+ctk.CTkFrame(main, fg_color=LINE, height=1, width=340).pack(pady=16)
+
+
+def section_label(text):
+    ctk.CTkLabel(
+        main, text=text,
+        font=("Segoe UI", 11, "bold"), text_color=MUTED
+    ).pack(pady=(6, 2))
+
+
+section_label("ROOM")
+room_menu = ctk.CTkOptionMenu(
+    main, values=room_types,
+    fg_color=CARD, button_color=ACCENT, button_hover_color=HOVER,
+    text_color=TEXT, dropdown_fg_color=CARD,
+    dropdown_text_color=TEXT, dropdown_hover_color=ACCENT,
+    corner_radius=10, font=("Segoe UI", 12)
 )
-style_menu.pack()
+room_menu.pack(pady=(0, 8))
 
-style_info_label = tk.Label(window, text="")
-style_info_label.pack(pady=4)
+section_label("STYLE")
+style_menu = ctk.CTkOptionMenu(
+    main, values=styles, command=update_style_choices,
+    fg_color=CARD, button_color=ACCENT, button_hover_color=HOVER,
+    text_color=TEXT, dropdown_fg_color=CARD,
+    dropdown_text_color=TEXT, dropdown_hover_color=ACCENT,
+    corner_radius=10, font=("Segoe UI", 12)
+)
+style_menu.pack(pady=(0, 2))
 
-tk.Label(window, text="Main Color:").pack()
-color_var = tk.StringVar(window)
-color_menu = tk.OptionMenu(window, color_var, "")
-color_menu.pack()
+style_info = ctk.CTkLabel(
+    main, text="", font=("Segoe UI", 12), text_color=ACCENT
+)
+style_info.pack(pady=(0, 8))
 
-tk.Label(window, text="Favorite Material:").pack()
-material_var = tk.StringVar(window)
-material_menu = tk.OptionMenu(window, material_var, "")
-material_menu.pack()
+section_label("MAIN COLOR")
+color_menu = ctk.CTkOptionMenu(
+    main, values=["-"],
+    fg_color=CARD, button_color=ACCENT, button_hover_color=HOVER,
+    text_color=TEXT, dropdown_fg_color=CARD,
+    dropdown_text_color=TEXT, dropdown_hover_color=ACCENT,
+    corner_radius=10, font=("Segoe UI", 12)
+)
+color_menu.pack(pady=(0, 8))
 
-tk.Label(window, text="Width (m):").pack()
-width_entry = tk.Entry(window)
-width_entry.pack()
+section_label("FAVORITE MATERIAL")
+material_menu = ctk.CTkOptionMenu(
+    main, values=["-"],
+    fg_color=CARD, button_color=ACCENT, button_hover_color=HOVER,
+    text_color=TEXT, dropdown_fg_color=CARD,
+    dropdown_text_color=TEXT, dropdown_hover_color=ACCENT,
+    corner_radius=10, font=("Segoe UI", 12)
+)
+material_menu.pack(pady=(0, 8))
 
-tk.Label(window, text="Length (m):").pack()
-length_entry = tk.Entry(window)
-length_entry.pack()
+section_label("WIDTH (m)")
+width_entry = ctk.CTkEntry(
+    main, justify="center", width=180,
+    fg_color=ENTRY, text_color=TEXT, border_color=LINE
+)
+width_entry.pack(pady=(0, 8))
 
-tk.Label(window, text="Budget (¥):").pack()
-budget_entry = tk.Entry(window)
-budget_entry.pack()
+section_label("LENGTH (m)")
+length_entry = ctk.CTkEntry(
+    main, justify="center", width=180,
+    fg_color=ENTRY, text_color=TEXT, border_color=LINE
+)
+length_entry.pack(pady=(0, 8))
 
-tk.Label(window, text="Budget scope:").pack()
-scope_var = tk.StringVar(window)
-scope_var.set(budget_scopes[0])
-tk.OptionMenu(window, scope_var, *budget_scopes).pack()
+section_label("BUDGET (¥)")
+budget_entry = ctk.CTkEntry(
+    main, justify="center", width=180,
+    fg_color=ENTRY, text_color=TEXT, border_color=LINE
+)
+budget_entry.pack(pady=(0, 8))
 
-tk.Button(window, text="Estimate Cost", command=estimate_cost).pack(pady=12)
+section_label("BUDGET SCOPE")
+scope_menu = ctk.CTkOptionMenu(
+    main, values=budget_scopes,
+    fg_color=CARD, button_color=ACCENT, button_hover_color=HOVER,
+    text_color=TEXT, dropdown_fg_color=CARD,
+    dropdown_text_color=TEXT, dropdown_hover_color=ACCENT,
+    corner_radius=10, font=("Segoe UI", 12)
+)
+scope_menu.pack(pady=(0, 16))
 
-result_label = tk.Label(window, text="", justify="left", anchor="w")
-result_label.pack(pady=8)
+estimate_button = ctk.CTkButton(
+    main, text="Estimate Cost", command=estimate_cost,
+    fg_color=ACCENT, hover_color=HOVER, text_color="white",
+    font=("Segoe UI", 13, "bold"),
+    corner_radius=14, width=200, height=42
+)
+estimate_button.pack()
+
+result_label = ctk.CTkLabel(
+    main, text="", justify="left",
+    font=("Segoe UI", 12), text_color=TEXT
+)
+result_label.pack(pady=16, padx=40, fill="x")
 
 update_style_choices()
 
-window.mainloop()
+app.mainloop()
