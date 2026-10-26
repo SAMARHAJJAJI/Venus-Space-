@@ -1,0 +1,26 @@
+Venus Space - Project Summary
+=============================
+Room: Living Room
+  Style: Cozy
+  Main Color: Warm Brown
+  Favorite Material: Wood
+  Room Area: 36.0 m2
+  Room Size: Spacious
+  Estimated Cost: ¥10700.00
+  Budget: ¥20000.00
+  Budget Status: Within budget
+
+Room: Dining Room
+  Style: Cozy
+  Main Color: Warm Brown
+  Favorite Material: Fabric
+  Room Area: 84.0 m2
+  Room Size: Spacious
+  Estimated Cost: ¥25700.00
+  Budget: ¥20000.00
+  Budget Status: Over budget
+
+-----------------------------
+Total Project Cost: ¥36400.00
+Total Budget: ¥40000.00
+Project is within budget (difference: ¥3600.00)
