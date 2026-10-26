@@ -123,7 +123,7 @@ def estimate_cost():
     else:
         status = f"Over budget (difference: ¥{total - budget:.2f})"
         last_result["budget_status"] = "Over budget"
-        options_frame.pack(pady=8)
+        options_frame.pack(pady=8, before=save_button)
 
     result_label.configure(
         text=(
@@ -376,14 +376,14 @@ ctk.CTkButton(
     corner_radius=12, font=("Segoe UI", 11)
 ).pack(pady=4)
 
-ctk.CTkButton(
+save_button = ctk.CTkButton(
     main, text="Save Summary to File",
     command=save_summary,
     fg_color=CARD, hover_color=ENTRY, text_color=TEXT,
     border_color=ACCENT, border_width=1,
     corner_radius=12, font=("Segoe UI", 11)
-).pack(pady=6)
-
+)
+save_button.pack(pady=6)
 save_label = ctk.CTkLabel(
     main, text="", font=("Segoe UI", 11), text_color=MUTED
 )
