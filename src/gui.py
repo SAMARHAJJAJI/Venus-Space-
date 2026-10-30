@@ -1,5 +1,5 @@
-
 import os
+import sys
 import tkinter as tk
 import customtkinter as ctk
 from data import (
@@ -29,7 +29,10 @@ ERROR   = "#B0524A"
 
 
 # ---------------- LOGIC ----------------
+
 last_result = None
+
+
 def update_style_choices(choice=None):
     details = style_details[style_menu.get()]
 
@@ -139,6 +142,7 @@ def estimate_cost():
         text_color=TEXT
     )
 
+
 def show_alternatives():
     if last_result is None:
         return
@@ -213,7 +217,7 @@ def save_summary():
         return
 
     save_project_summary(
-        "../design_summary.txt",
+        "design_summary.txt",
         [last_result],
         last_result["total"],
         last_result["budget"]
@@ -223,6 +227,8 @@ def save_summary():
         text="Summary saved to design_summary.txt",
         text_color=ACCENT
     )
+
+
 # ---------------- WINDOW ----------------
 
 ctk.set_appearance_mode("light")
@@ -234,7 +240,9 @@ app.title("Venus Space")
 if getattr(sys, "frozen", False):
     ASSETS = os.path.join(sys._MEIPASS, "assets")
 else:
-    ASSETS = os.path.join(os.path.dirname(__file__), "..", "assets")app.iconbitmap(os.path.join(ASSETS, "logo.ico"))
+    ASSETS = os.path.join(os.path.dirname(__file__), "..", "assets")
+
+app.iconbitmap(os.path.join(ASSETS, "logo.ico"))
 
 logo_image = tk.PhotoImage(file=os.path.join(ASSETS, "logo.png"))
 logo_image = logo_image.subsample(2, 2)
@@ -354,6 +362,7 @@ result_label = ctk.CTkLabel(
     font=("Segoe UI", 12), text_color=TEXT
 )
 result_label.pack(pady=8, padx=40, fill="x")
+
 options_frame = ctk.CTkFrame(main, fg_color=BG)
 
 ctk.CTkButton(
@@ -386,6 +395,7 @@ save_button = ctk.CTkButton(
     corner_radius=12, font=("Segoe UI", 11)
 )
 save_button.pack(pady=6)
+
 save_label = ctk.CTkLabel(
     main, text="", font=("Segoe UI", 11), text_color=MUTED
 )
