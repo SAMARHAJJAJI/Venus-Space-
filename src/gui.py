@@ -231,8 +231,10 @@ app = ctk.CTk()
 app.geometry("440x700")
 app.title("Venus Space")
 
-ASSETS = os.path.join(os.path.dirname(__file__), "..", "assets")
-app.iconbitmap(os.path.join(ASSETS, "logo.ico"))
+if getattr(sys, "frozen", False):
+    ASSETS = os.path.join(sys._MEIPASS, "assets")
+else:
+    ASSETS = os.path.join(os.path.dirname(__file__), "..", "assets")app.iconbitmap(os.path.join(ASSETS, "logo.ico"))
 
 logo_image = tk.PhotoImage(file=os.path.join(ASSETS, "logo.png"))
 logo_image = logo_image.subsample(2, 2)
